@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+         string sum = "";
+        int i = a.size() - 1, j = b.size() - 1;
+        int carry = 0;
+        
+        while (i >= 0 || j >= 0) {
+            int digitA = i >= 0 ? (a[i] - '0') : 0;
+            int digitB = j >= 0 ? (b[j] - '0') : 0;
+            int tmp = digitA + digitB + carry;
+            carry = tmp / 2;
+            int digit = tmp % 2;
+            sum = to_string(digit) + sum;
+            i--;
+            j--;
+        }
+        
+        if (carry > 0) {
+            sum = to_string(carry) + sum;
+        }
+        
+        return sum;
+    }
+};

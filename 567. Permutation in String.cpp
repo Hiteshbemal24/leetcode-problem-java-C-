@@ -1,33 +1,42 @@
 class Solution {
-    bool areVectorsEqual(vector<int> a, vector<int> b){
-        for(int i=0; i<26; i++){
-            if(a[i]!=b[i]) return false;
+private:
+    bool checkEqual(int a[26], int b[26])
+    {
+        for(int i=0;i<26;i++) {
+            if(a[i]!=b[i])
+            return 0;
         }
-        return true;
-    }
+        return 1;
+    }    
 public:
     bool checkInclusion(string s1, string s2) {
-        if(s2.size()<s1.size()) return false;
-        vector<int> freqS1(26, 0);
-        for(char c: s1) freqS1[c-'a']++;
-        
-        vector<int> freqS2(26, 0);
-        int i=0, j=0;
-        
-        while(j<s2.size()){
-            freqS2[s2[j]-'a']++;
-            
-            if(j-i+1==s1.size()){
-                if(areVectorsEqual(freqS1, freqS2)) return true;
-            }
-            
-            if(j-i+1<s1.size()) j++;
-            else{
-                freqS2[s2[i]-'a']--;
-                i++;
-                j++;
-            }
+        int arr1[26]={0};
+        for(int i=0;i<s1.length();i++) {
+            int index=s1[i]-'a';
+            arr1[index]++;
         }
-        return false;
+        int i=0;
+        int windowSize=s1.length();
+        int arr2[26]={0};
+        while(i<windowSize && i<s2.length()) {
+        int index=s2[i]-'a';
+        arr2[index]++;
+        i++;
+    }
+    if(checkEqual(arr1,arr2))
+    return 1;
+    while(i<s2.length()) {
+        char newChar=s2[i];
+        int index=newChar-'a';
+        arr2[index]++;
+        char oldChar=s2[i-windowSize];
+        index=oldChar-'a';
+        arr2[index]--;
+        i++;
+        if(checkEqual(arr1,arr2))
+        return 1;
+
+     }
+    return 0;
     }
 };
